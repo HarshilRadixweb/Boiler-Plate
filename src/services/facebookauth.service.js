@@ -9,19 +9,21 @@ const { generateUserToken } = require("../helpers/jwt");
  * @param {*} body
  * @returns
  */
-const facebookLogin = async (body,ip) => {
-    var user = await userModel.findOne({where:body});
-    if(!user){
-        body.password = "FacebookAuthentication"
-        const userData = new userModel(body);
-        user =  await userData.save();
-    }
-    const token = generateUserToken(user.id, ip);
-    const reflection = {token:token};
-    const response = await userModel.update(reflection,{where:{username:body.username}});
-    return {token:token};
-}
+const facebookLogin = async (body, ip) => {
+	var user = await userModel.findOne({ where: body });
+	if (!user) {
+		body.password = "FacebookAuthentication";
+		const userData = new userModel(body);
+		user = await userData.save();
+	}
+	const token = generateUserToken(user.id, ip);
+	const reflection = { token: token };
+	const response = await userModel.update(reflection, {
+		where: { username: body.username },
+	});
+	return { token: token };
+};
 // EXPORTS =================================================================
 module.exports = {
-    facebookLogin
+	facebookLogin,
 };

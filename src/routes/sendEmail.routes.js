@@ -6,7 +6,7 @@ const { sendEmailController } = require("../controllers");
 const sendEmailRouter = new Router();
 
 // ROUTES =============================================================
-sendEmailRouter.post("/create",sendEmailController.sendMail);
+sendEmailRouter.post("/create", sendEmailController.sendMail);
 
 //EXPORTS =============================================================
 

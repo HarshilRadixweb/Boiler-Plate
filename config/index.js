@@ -3,17 +3,16 @@
 require("dotenv").config();
 
 const ENV_VARS = {
-    appConfg: {
-        port: process.env.PORT,
-        apiVersion: process.env.API_VERSION,
-        project: process.env.PROJECT_NAME
-    },
-    jwtConfig: {
-        jwtSecret: process.env.JWT_SECRET,
-        expiresIn: `${ (parseInt(process.env.EXPIRES_IN) * 60).toString() }s`
-    },
-    mysql: {
-
+	appConfg: {
+		port: process.env.PORT,
+		apiVersion: process.env.API_VERSION,
+		project: process.env.PROJECT_NAME,
+	},
+	jwtConfig: {
+		jwtSecret: process.env.JWT_SECRET,
+		expiresIn: `${(parseInt(process.env.EXPIRES_IN) * 60).toString()}s`,
+	},
+	mysql: {
 		host: process.env.DB_HOST,
 
 		username: process.env.DB_USERNAME,
@@ -25,7 +24,6 @@ const ENV_VARS = {
 		dialect: "mysql",
 
 		pool: {
-
 			max: 5,
 
 			min: 0,
@@ -33,9 +31,7 @@ const ENV_VARS = {
 			acquire: 30000,
 
 			idle: 10000,
-
 		},
-
-	}
+	},
 };
 module.exports = ENV_VARS;

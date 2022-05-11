@@ -1,13 +1,13 @@
 "use strict";
 // REQUIRES ===============================================================
 const md5 = require("md5");
-const  {userModel}  = require("../models");
+const { userModel } = require("../models");
 const {
-    ER_USERNAME_ALREADY_EXISTS,
-    ER_DOCUMENT_NOT_FOUND,
-    ER_WRONG_PASSWORD
+	ER_USERNAME_ALREADY_EXISTS,
+	ER_DOCUMENT_NOT_FOUND,
+	ER_WRONG_PASSWORD,
 } = require("../constants/errorMessaegs.constants");
-const { generateUserToken } = require( "../helpers/jwt" );
+const { generateUserToken } = require("../helpers/jwt");
 
 // METHODS ================================================================
 /**
@@ -16,8 +16,8 @@ const { generateUserToken } = require( "../helpers/jwt" );
  * @returns
  */
 const insertOneUser = async (body) => {
-    const userData = new userModel(body);
-    return await userData.save();
+	const userData = new userModel(body);
+	return await userData.save();
 };
 
 /**
@@ -26,27 +26,26 @@ const insertOneUser = async (body) => {
  * @returns
  */
 const findOneUser = async (filter) => {
-    return await userModel.findOne({where:filter});
+	return await userModel.findOne({ where: filter });
 };
 
 /**
  * Update one user
- * @param {*} filter 
- * @param {*} reflection 
- * @returns 
+ * @param {*} filter
+ * @param {*} reflection
+ * @returns
  */
-const updateOneUser = async ( filter, reflection ) => {
-    return  await userModel.update(reflection, {where:filter});
-    
-}
+const updateOneUser = async (filter, reflection) => {
+	return await userModel.update(reflection, { where: filter });
+};
 
 /**
  * Count number of users
- * @param {*} filter 
- * @returns 
+ * @param {*} filter
+ * @returns
  */
 const countUsers = async (filter) => {
-    return await userModel.count(filter);
+	return await userModel.count(filter);
 };
 
 // SERVICES ===============================================================
@@ -56,58 +55,58 @@ const countUsers = async (filter) => {
  * @returns
  */
 const userCreate = async (body) => {
-    const filter = { username: body.username };
+	const filter = { username: body.username };
 
-    if (await countUsers(filter)) throw ER_USERNAME_ALREADY_EXISTS;
+	if (await countUsers(filter)) throw ER_USERNAME_ALREADY_EXISTS;
 
-    body.password = md5(body.password);
-    return await insertOneUser(body);
+	body.password = md5(body.password);
+	return await insertOneUser(body);
 };
 
 /**
  * User login service
  * @param {*} body
  * @param {*} ip
- * @returns 
+ * @returns
  */
 const userLogin = async (body, ip) => {
-    const filter = { username: body.username };
+	const filter = { username: body.username };
 
-    const data = await findOneUser(filter);
-    if( !data ) throw ER_DOCUMENT_NOT_FOUND(`User ${body.username}`);
-    
-    const password = md5( body.password );
-    if( password !== data.password ) throw ER_WRONG_PASSWORD;
+	const data = await findOneUser(filter);
+	if (!data) throw ER_DOCUMENT_NOT_FOUND(`User ${body.username}`);
 
-    const token = generateUserToken(data._id, ip);
-    const reflection = {token:token};
+	const password = md5(body.password);
+	if (password !== data.password) throw ER_WRONG_PASSWORD;
 
-    const response = await updateOneUser( filter, reflection );
-    if( !response ) throw ER_DOCUMENT_NOT_FOUND(`User ${body.username}`);
-    return { token: token };
-}
+	const token = generateUserToken(data._id, ip);
+	const reflection = { token: token };
+
+	const response = await updateOneUser(filter, reflection);
+	if (!response) throw ER_DOCUMENT_NOT_FOUND(`User ${body.username}`);
+	return { token: token };
+};
 
 /**
  * User logout service.
- * @param {*} _userId 
- * @returns 
+ * @param {*} _userId
+ * @returns
  */
 const userLogout = async (_userId) => {
-    const filter = { _id: _userId };
+	const filter = { _id: _userId };
 
-    const data = await findOneUser(filter);
-    if( !data ) throw ER_DOCUMENT_NOT_FOUND(`User ${_userId}`);
+	const data = await findOneUser(filter);
+	if (!data) throw ER_DOCUMENT_NOT_FOUND(`User ${_userId}`);
 
-    const reflection = { $set: { token: null } }
-    
-    await updateOneUser( filter, reflection );
-    return {};
-}
+	const reflection = { $set: { token: null } };
+
+	await updateOneUser(filter, reflection);
+	return {};
+};
 
 // EXPORTS =================================================================
 module.exports = {
-    findOneUser,
-    userCreate,
-    userLogin,
-    userLogout
+	findOneUser,
+	userCreate,
+	userLogin,
+	userLogout,
 };

@@ -2,18 +2,18 @@ module.exports = (sequelize, Sequelize) => {
 	const Users = sequelize.define(
 		"users",
 		{
-            username: {
+			username: {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
-            password: {
-                type: Sequelize.STRING,
+			password: {
+				type: Sequelize.STRING,
 				allowNull: false,
-            },
-			token:{
+			},
+			token: {
 				type: Sequelize.STRING,
 			},
-        	createdAt: {
+			createdAt: {
 				field: "created_at",
 				type: Sequelize.DATE,
 			},

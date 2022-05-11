@@ -13,12 +13,12 @@ const { RESPONSE } = require("../constants/app.constants");
  * @returns
  */
 const apiResponseMiddleware = (body, req, res) => {
-    if (body.response_code === RESPONSE.ERROR.code) return body;
-    return {
-        response_code: RESPONSE.SUCCESS.code,
-        message: body.message || RESPONSE.SUCCESS.message,
-        data: body || {},
-    };
+	if (body.response_code === RESPONSE.ERROR.code) return body;
+	return {
+		response_code: RESPONSE.SUCCESS.code,
+		message: body.message || RESPONSE.SUCCESS.message,
+		data: body || {},
+	};
 };
 
 // EXPORTS ==================================================================

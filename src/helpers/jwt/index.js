@@ -9,12 +9,12 @@ const { jwtConfig } = require("../../../config");
  * @returns
  */
 const decodeUserToken = (token) => {
-    try {
-        const decodedToken = jwt.verify(token, jwtConfig.jwtSecret);
-        return decodedToken;
-    } catch (error) {
-        throw error;
-    }
+	try {
+		const decodedToken = jwt.verify(token, jwtConfig.jwtSecret);
+		return decodedToken;
+	} catch (error) {
+		throw error;
+	}
 };
 
 /**
@@ -24,17 +24,17 @@ const decodeUserToken = (token) => {
  * @returns
  */
 const generateUserToken = (_userId, ip) => {
-    try {
-        const generateToken = jwt.sign({ _userId, ip }, jwtConfig.jwtSecret, {
-            expiresIn: jwtConfig.expiresIn,
-        });
-        return generateToken;
-    } catch (error) {
-        throw error;
-    }
+	try {
+		const generateToken = jwt.sign({ _userId, ip }, jwtConfig.jwtSecret, {
+			expiresIn: jwtConfig.expiresIn,
+		});
+		return generateToken;
+	} catch (error) {
+		throw error;
+	}
 };
 
 module.exports = {
-    decodeUserToken,
-    generateUserToken,
+	decodeUserToken,
+	generateUserToken,
 };

@@ -7,7 +7,7 @@ const sendEmail = require("./sendEmail.routes");
 
 // ROUTER USES =========================================================
 router.use("/user", userRoutes);
-router.use("/sendEmail",sendEmail);
+router.use("/sendEmail", sendEmail);
 
 // EXPORTS =============================================================
 module.exports = router;

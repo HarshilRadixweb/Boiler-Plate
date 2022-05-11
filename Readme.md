@@ -4,11 +4,12 @@ It also includes JWT tokenizer with support of a single instance of user login a
 Other than this, we have provided an error handler, and database password encryption too.
 
 Following are some steps/utils to use this plate.
+
 1. Rename the root directory to your project name.
 2. Edit ".env" file with your specific project details.
 3. Run the following command to initalize the project and enter the details as you please: "npm init".
 4. Run the following command to install all the required modules to get this project working:
-    "npm i dotenv express express-mung cors http jsonwebtoken log4js md5 mongoose"
+   "npm i dotenv express express-mung cors http jsonwebtoken log4js md5 mongoose"
 
 With this, you are ready to start working with your project.
 
